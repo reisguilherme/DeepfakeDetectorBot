@@ -47,6 +47,7 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
    cd ../..
    sudo docker compose up
    ```
+   Configure as credenciais do WhatsApp quando um Qrcode do bot aparecer na tela.
 
    Uma vez que o servidor do bot e o modelo de detecção de deepfakes estiverem rodando, use o comando abaixo para iniciar a integração:
 
@@ -54,10 +55,6 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
     cd application
     python3 Main.py
    ```
-
-
-
-4. Configure as credenciais do WhatsApp quando um Qrcode do bot aparecer na tela.
 
 
 ## Uso
