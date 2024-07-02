@@ -62,6 +62,13 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
 
 ## Uso
 
-- O bot ira ler e responder mensagens recebidas pelo número que foi usado para a configuração das credenciais.
+- O bot irá ler e responder mensagens recebidas pelo número que foi usado para a configuração das credenciais.
 - Envie mensagens para esse número caso queira realizar a verificação de veracidade de algum aúdio.
 - O bot analisará automaticamente os áudios recebidos e notificará o usuário quando detectar um áudio gerado por IA.
+
+## TO DO
+
+- Configurar DockerFile e editar docker-compose.yaml para a integração automática do módulo 'application'.
+- Melhorar a lógica de processamento e resposta das mensagens do WhatsApp.
+- Implementar lógica necessária para lidar com vídeos.
+- Melhorar a robustez e generalização do modelo de detecção.
