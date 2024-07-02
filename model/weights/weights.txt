@@ -1,0 +1,1 @@
+Colocar nessa pasta os pesos do modelo de detecção depois de treinado.
