@@ -1,0 +1,6 @@
+{   
+    "enble": true, 
+    "serverIP": "http://172.27.178.31",
+    "serverPort": 3001, 
+    "postRoute": "/api/mensagem"
+} 

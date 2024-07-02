@@ -1,0 +1,28 @@
+version: '3.9'
+
+volumes:
+  audio_samples:
+    driver: local
+
+services:
+  deepfake-detector:
+    build: 
+      dockerfile: ./model/Dockerfile
+      context: .
+    image: deepfake-image
+    container_name: deepfake-model
+    ports:
+      - "6969:6969"
+    command: python /app/model/inference/endpoint.py
+  venom-bot:
+    build: 
+      dockerfile: ./source_bot/Dockerfile
+      context: .
+    image: bot-image
+    container_name: wpp-bot
+    ports:
+      - "3000:3000"
+    volumes:
+      - audio_samples:/usr/src/app/docs/attachments
+      - /home/reis/DeepfakeDetection/audio_samples:/usr/src/app/docs/attachments
+    command: npm start
