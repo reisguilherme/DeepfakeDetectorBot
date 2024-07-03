@@ -5,7 +5,7 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
 
 ## Funcionalidades Principais
 
-- **Detecção Simplificada ao usuário:** O bot se integra ao WhatsApp por meio de um número ao qual o usuário por encaminhar aúdios para verificar sua autenticidade.
+- **Detecção Simplificada ao usuário:** O bot se integra ao WhatsApp por meio de um número ao qual o usuário pode encaminhar aúdios para verificar sua autenticidade.
 - **Alerta:** Notifica o usuário designado quando um áudio é classificado como falso.
 
 
@@ -69,3 +69,4 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
 - Melhorar a lógica de processamento e resposta das mensagens do WhatsApp.
 - Implementar lógica necessária para lidar com vídeos.
 - Melhorar a robustez e generalização do modelo de detecção.
+- Implementar módulos para funcionamento do modelo em larga escala e módulo de monitoramento automático de mensagens em grupos.
