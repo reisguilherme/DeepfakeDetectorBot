@@ -1,6 +1,6 @@
 {   
     "enble": true, 
-    "serverIP": "http://0.0.0.0",
+    "serverIP": "http://application",
     "serverPort": 3001, 
     "postRoute": "/api/mensagem"
 } 

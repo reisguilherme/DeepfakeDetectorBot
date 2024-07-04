@@ -2,10 +2,9 @@ const fs = require('fs');
 const mime = require('mime-types');
 const path = require('path');
 
-const path_root = '/home/reis/DeepfakeDetection/';
-const path_attachment = path_root + 'audio_samples/';
+const path_attachment = 'audio_samples/';
 
-[path_root, path_attachment].forEach(dir => {
+[path_attachment].forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 });
 

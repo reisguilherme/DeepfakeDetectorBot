@@ -17,7 +17,7 @@ id2label = {0: "real", 1: "fake"}
 extrator, model = feature_extractor_model(model_path, label2id, id2label)
 model_w2v = Wav2VecClassificationModel(model=model)
 # Carrega os pesos do modelo treinado
-model_w2v.load_state_dict(torch.load('/app/model/weights/checkpoint_epoch_10baseline_w2v-xls-300-dataaug-multistep-lr.pt', map_location=torch.device('cpu')))
+model_w2v.load_state_dict(torch.load('/app/weights/checkpoint_epoch_10baseline_w2v-xls-300-dataaug-multistep-lr.pt', map_location=torch.device('cpu')))
 model_w2v.eval()
 
 @app.post("/predict/")

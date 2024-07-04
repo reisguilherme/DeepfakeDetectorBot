@@ -5,13 +5,13 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY model/ .
+COPY application/ .
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Make port 6969 available to the world outside this container
-EXPOSE 6969
+# Make port 3001 available to the world outside this container
+EXPOSE 3001
 
-# Run endpoint.py when the container launches
-CMD ["python", "/app/inference/endpoint.py"]
+# Run Main.py when the container launches
+CMD ["python", "Main.py"]

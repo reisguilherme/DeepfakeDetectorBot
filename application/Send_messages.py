@@ -1,7 +1,7 @@
 import requests
 
 port = 3000
-endpoint = lambda x: f'http://0.0.0.0:{port}/{x}'
+endpoint = lambda x: f'http://bot:{port}/{x}'
 
 def send_message(number, text,  path_file = None) -> bool:
     """
