@@ -1,76 +1,39 @@
 const { Router } = require("express");
-const Database = require("./db/config");
 const router = Router();
-var db;
+const venom = require('./venom');
 
-// Endpoint para manipulação dos dados
 router.post("/send", async (req, res) => {
+  const { number, text, send_file } = req.body;
 
-    if (db === undefined) db = await Database();
+  if (!number || !text) {
+    console.error('Number or text is missing');
+    return res.status(400).json({ error: "Number or text is missing" });
+  }
 
-    // todo: definir casos de edição pela ferramenta control 
-    var { number, text, timestamp, send_file } = req.body;
+  const client = venom.getClient();
 
-    if (!number || !text) throw new Error("Number or text is missing");
-    
-    if (!send_file) send_file = '';
+  if (!client) {
+    console.error('Venom client is not initialized');
+    return res.status(500).json({ message: "Venom client is not initialized" });
+  }
 
-    try {
-        await db.store_messages_to_send(number, text, timestamp, send_file);
-        console.log("Mensagem armazenada para envio")
-        return res.status(200).json({ message: "Mensagem armazenada para envio" });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: error})
+  try {
+    console.log('Received request to send message:', req.body);
+
+    if (send_file) {
+      console.log(`Sending file to ${number}`);
+      await client.sendFile(`${number}@c.us`, send_file, '', text);
+    } else {
+      console.log(`Sending text to ${number}`);
+      await client.sendText(`${number}@c.us`, text);
     }
 
-});
-
-router.post("/history", async (req, res) => {
-
-    if (db === undefined) db = await Database();
-
-    const { number } = req.body;
-
-    if (!number) throw new Error("Number is missing");
-
-    try {
-        const history = await db.get_number_history(number);
-
-        if (!history) throw new Error("History could not be retrieved!")
-        
-        console.log("Histórico enviado!")
-        return res.status(200).json( history);
-
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: error})
-    }
-});
-
-router.post("/last", async (req, res) => {
-    /* 
-        retorna as ultimas mensagens recebidas
-    */
-
-    if (db === undefined) db = await Database();
-
-    const { hours } = req.body;
-
-    if (!hours) throw new Error("hours is missing");
-
-    try {
-        const history = await db.get_limit_history(hours);
-
-        if (!history) throw new Error("History could not be retrieved!")
-
-        console.log("Histórico enviado!")
-        return res.status(200).json(history);
-
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: error})
-    }
+    console.log('Message sent successfully');
+    return res.status(200).json({ message: "Message sent successfully" });
+  } catch (error) {
+    console.error('Error sending message:', error);
+    return res.status(500).json({ message: "Error sending message" });
+  }
 });
 
 module.exports = router;

@@ -26,6 +26,6 @@ def post_message():
 def get_messages():
     while True:
         message = message_queue.get()
-        messages_to_save = [{'number': message['number'], 'message': message['text']}]
+        #messages_to_save = [{'number': message['number'], 'message': message['text']}]
         #save_to_csv(messages_to_save)
         yield message

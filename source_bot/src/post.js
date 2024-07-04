@@ -1,68 +1,49 @@
-// arquivo para o envio da mensagem com o post
-
-// message_sender.js
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const configFilePath = path.join(__dirname, 'server_config.json');
 
-
-// funcao para carregar as configuracoes do servidor
 function loadConfig() {
   try {
     const rawData = fs.readFileSync(configFilePath);
     return JSON.parse(rawData);
-    
   } catch (error) {
-    console.error('Erro ao carregar configurações:', error.message);
+    console.error('Error loading configurations:', error.message);
     return null;
-      /*
-    { 
-        "enble": false, // "true" para habilitar o envio de mensagens via post
-        "serverIP": "http://127.0.0.1",
-        "serverPort": 3001, 
-        "postRoute": "/api/mensagem"
-      } 
-      */   
-
   }
 }
+
 const post_config = loadConfig();
 
-
 if (post_config) {
-  console.log('Configurações carregadas com sucesso:');
+  console.log('Configurations loaded successfully:');
   console.log(post_config);
 
-  if (!post_config.enble) 
-    console.log('Envio de mensagens via post desabilitado.');
-  else
-    console.log('Envio de mensagens via post habilitado.');
-
+  if (!post_config.enble) {
+    console.log('Message posting disabled.');
+  } else {
+    console.log('Message posting enabled.');
+  }
 } else {
-  console.error('As configurações não puderam ser carregadas. Verifique o arquivo config.json.');
+  console.error('Failed to load configurations. Check the config.json file.');
 }
 
-
-// 
-//  Funcao para enviar a mensagem \\ 
-//
-
-
 async function post_message(message) {
-    if (!post_config) return;
-    if (!post_config.enble) return;
+  if (!post_config) return null;
+  if (!post_config.enble) return null;
 
   try {
-    const response = await axios.post( `${post_config.serverIP}:${post_config.serverPort}${post_config.postRoute}`, {
+    console.log('Sending message:', message);
+    const response = await axios.post(`${post_config.serverIP}:${post_config.serverPort}${post_config.postRoute}`, {
       message: message,
     });
 
-    console.log(`[POST]- ${response.data}`);
+    console.log('Response from server:', response.data);
+    return response;
   } catch (error) {
-    console.error('Erro ao enviar mensagem:', error.message);
+    console.error('Error sending message:', error.message);
+    return null;
   }
 }
-
 
 module.exports = { post_message, post_config };

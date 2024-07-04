@@ -14,7 +14,7 @@ def process_audio(message):
         answer = "Recebemos seu áudio e estamos analisando se ele foi gerado por uma inteligência artificial.\n\n*Isso pode levar alguns segundos*."
         send_message(message['number'], answer)
         time.sleep(2) 
-        filename = f"{message['newID']}.oga"
+        filename = f"{message['timestamp']}.oga"
         filepath = os.path.join('/home/reis/DeepfakeDetection/audio_samples', filename)
         files = {'audio_file':open(filepath, 'rb')}
         response = requests.post(URL, files=files)
@@ -38,11 +38,12 @@ def Master():
         Configurar o endpoint do modelo de DeepFake aqui.
         
         """
-        print(message)
+        print(message)     
         if message['mimetype'].startswith('audio') and message['text'] == '':
             process_audio(message)
         else:
             send_welcome(message)
+   
 
 if __name__ == '__main__':
     message_thread = threading.Thread(target=Master)
