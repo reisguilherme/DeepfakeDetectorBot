@@ -16,6 +16,7 @@ COPY source_bot/ .
 
 # Install application dependencies
 RUN npm install
+RUN npm install bull
 
 # Install Chromium using puppeteer
 RUN npx puppeteer browsers install chrome
