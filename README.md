@@ -6,10 +6,9 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
 ## Funcionalidades Principais
 
 - **Simplicidade ao usuário:** O bot se integra ao WhatsApp através de um número de telefone, permitindo que os usuários interajam com ele diretamente.
-- **Função Guarda:** O bot pode ser adicionado a grupos no WhatsApp onde irá monitorar automaticamente todas as mensagens de vídeo e aúdio enviadas e alertar quando detectar algum conteúdo que possa ter sido gerado por IA.
 - **Alerta:** O bot notifica, via chat individual ou chat em grupo, quando um conteúdo é classificado como gerado por IA.
 - **Nível de Confiança:** O bot informa ao usuário a confiança em sua resposta ao analisar algum conteúdo.
-- **Monitoramento em larga escala:** O bot pode interagir com múltiplos chats simultaneamente de forma rápida e precisa.
+- **Monitoramento em larga escala:** O bot pode interagir com múltiplos chats simultaneamente de forma rápida e precisa
 
 ## Requisitos de Instalação
 
@@ -73,11 +72,3 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
 - O bot irá ler e responder mensagens recebidas no número que foi usado para a configuração das credenciais.
 - Envie mensagens para esse número caso queira realizar a verificação de veracidade de algum aúdio.
 - O bot analisará automaticamente os áudios e vídeos recebidos e notificará o usuário quando detectar um áudio gerado por IA.
-
-## TO DO
-
-- Configurar DockerFile e editar docker-compose.yaml para a integração automática do módulo 'application'. 🚧
-- Melhorar a lógica de processamento e resposta das mensagens do WhatsApp. ⏰
-- Implementar lógica necessária para lidar com vídeos. ⏰
-- Melhorar a robustez e generalização do modelo de detecção. ⏰
-- Implementar módulos para funcionamento do modelo em larga escala e módulo de monitoramento automático de mensagens em grupos. ⏰
