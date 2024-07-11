@@ -2,6 +2,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 import torch
 import torchaudio
+import torch.nn.functional as F
 from wav2vec import Wav2VecClassificationModel
 from FeatureExtrator import model as feature_extractor_model
 from ProcessAudio import process_audio
@@ -27,7 +28,7 @@ async def predict_audio_class(audio_file: UploadFile = File(...)):
     Args:
         audio_file (UploadFile): Arquivo de áudio enviado pelo usuário.
     Returns:
-        JSONResponse: Classe prevista (real ou fake).
+        JSONResponse: Classe prevista (real ou fake) e a confiança.
     """
     audio_path = f"/tmp/{audio_file.filename}"
     with open(audio_path, "wb") as buffer:
@@ -35,9 +36,13 @@ async def predict_audio_class(audio_file: UploadFile = File(...)):
     audio, sr = torchaudio.load(audio_path)
     sample = process_audio(speech_array=audio, sr=sr, target_sample_rate=16000, processor=extrator)
     with torch.no_grad():
-        sample_preds = model_w2v(sample.unsqueeze(0))
-        predicted_class = id2label[sample_preds.argmax().item()]
-    return JSONResponse(content={"predicted_class": predicted_class})
+        logits = model_w2v(sample.unsqueeze(0))
+        probabilities = F.softmax(logits, dim=1).squeeze()
+        predicted_class_id = logits.argmax().item()
+        predicted_class = id2label[predicted_class_id]
+        confidence = probabilities[predicted_class_id].item()
+    
+    return JSONResponse(content={"predicted_class": predicted_class, "confidence": confidence})
 
 if __name__ == "__main__":
     import uvicorn

@@ -1,3 +1,4 @@
+import threading
 from Send_messages import send_message
 from Message_processing import get_messages
 from Message_processing import app
@@ -53,8 +54,10 @@ def process_audio(message):
                 response = requests.post(URL, files=files)
             if response.status_code == 200:
                 data = response.json()
-                audio_class = "*não foi gerado por IA*, ufa..." if data['predicted_class'] == 0 else "*foi gerado por IA*, tome cuidado e se atente ao conteúdo da conversa."
-                result_messages = ["Seu áudio foi processado com êxito!", f"Nossos algoritmos de classificação apontam que o áudio enviado {audio_class}", "Obrigado por usar nosso serviço!"]
+                logging.info(data)
+                audio_class = "*não foi gerado por IA*." if data['predicted_class'] == 'real' else "*foi gerado por IA*, tome cuidado e se atente ao conteúdo da conversa."
+                #confidence = data[]
+                result_messages = [f"O áudio enviado {audio_class} O nível de confiança do modelo nessa resposta é de {data['confidence']}% de certeza."]
             else:
                 result_messages = ["Hmmm...", "Houve um erro ao processar o áudio.", "Tente novamente mais tarde."]  
         except Exception as e:
@@ -70,24 +73,29 @@ def process_audio(message):
             logging.info(f"Erro ao tentar excluir o arquivo: {str(e)}")
 
 def send_welcome(message):
-    response_messages = ["Olá! Este é o bot de detecção de *áudios gerados por inteligência artificial* (DeepFakes) do Guilherme.", "Envie um áudio para verificar se ele foi gerado por uma IA e garantir sua segurança."]
+    response_messages = ["Olá! Este é um protótipo de bot de detecção de *áudios gerados por inteligência artificial*.", "Envie um áudio."]
     #answer = "Olá! Este é o bot de detecção de *áudios gerados por inteligência artificial* (DeepFakes) do CEIA-UFG.\n\n*Envie um áudio* para verificar se ele foi gerado por uma IA e garantir sua segurança."
     for response_message in response_messages:
         send_message(message['number'], response_message)
         time.sleep(2)
 
 def Master():
+    threads = []
     for message in get_messages():
         """
         Processa as mensagens recebidas e envia a resposta.
-        Configurar o endpoint do modelo de DeepFake aqui.
-        
         """
         print(message)     
         if message['mimetype'].startswith('audio') and message['text'] == '':
-            process_audio(message)
+            thread = threading.Thread(target=process_audio, args=(message,))
+            threads.append(thread)
+            thread.start()
+            #process_audio(message)
         else:
-            send_welcome(message)
+            thread = threading.Thread(target=send_welcome, args=(message,))
+            threads.append(thread)
+            thread.start()
+            #send_welcome(message)
 
 if __name__ == '__main__':
     message_thread = threading.Thread(target=Master)
