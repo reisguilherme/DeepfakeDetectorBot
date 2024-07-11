@@ -9,18 +9,19 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Create and set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy the entire source_bot folder to the working directory
 COPY source_bot/ .
 
 # Install application dependencies
 RUN npm install
+RUN npm install bull
 
 # Install Chromium using puppeteer
 RUN npx puppeteer browsers install chrome
 
-# Expose the port the app runs on (change if necessary)
+# Expose the port the app runs on 
 EXPOSE 3000
 
 # Start the application

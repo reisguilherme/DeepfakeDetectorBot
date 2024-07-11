@@ -4,25 +4,49 @@ volumes:
   audio_samples:
     driver: local
 
+networks:
+  bot-net:
+    driver: bridge
+
 services:
-  deepfake-detector:
+  model:
     build: 
       dockerfile: ./model/Dockerfile
       context: .
-    image: deepfake-image
-    container_name: deepfake-model
+    image: model-image
+    container_name: model
     ports:
       - "6969:6969"
-    command: python /app/model/inference/endpoint.py
-  venom-bot:
+    command: python /app/inference/endpoint.py
+    networks:
+      - bot-net
+
+  bot:
     build: 
       dockerfile: ./source_bot/Dockerfile
       context: .
     image: bot-image
-    container_name: wpp-bot
+    container_name: bot
     ports:
       - "3000:3000"
     volumes:
-      - audio_samples:/usr/src/app/docs/attachments
-      - /home/reis/DeepfakeDetection/audio_samples:/usr/src/app/docs/attachments
+      - audio_samples:/app/audio_samples
+      - ./audio_samples:/app/audio_samples
     command: npm start
+    networks:
+      - bot-net
+
+  application:
+    build: 
+      dockerfile: ./application/Dockerfile
+      context: .
+    image: application-image
+    container_name: application
+    ports:
+      - "3001:3001"
+    volumes:
+      - audio_samples:/app/audio_samples
+      - ./audio_samples:/app/audio_samples
+    command: python /app/Main.py
+    networks:
+      - bot-net

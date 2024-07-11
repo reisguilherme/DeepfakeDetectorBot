@@ -1,21 +1,21 @@
-# Detecção de aúdios gerados por inteligência artificial no WhatsApp.
+# Detecção de aúdios gerados por inteligência artificial no WhatsApp. 🤖
 
 
 Este projeto implementa um bot para detecção de áudios gerados por inteligência artificial (IA) no WhatsApp. O objetivo principal é identificar e sinalizar áudios que foram gerados por modelos de síntese de fala automatizados, dificultando golpes de falsidade ideológica por meio de clonagem de voz e a propagação em massa de notícias falsas.
 
 ## Funcionalidades Principais
 
-- **Detecção Simplificada ao usuário:** O bot se integra ao WhatsApp por meio de um número ao qual o usuário pode encaminhar aúdios para verificar sua autenticidade.
-- **Alerta:** Notifica o usuário designado quando um áudio é classificado como falso.
-
+- **Simplicidade ao usuário:** O bot se integra ao WhatsApp através de um número de telefone, permitindo que os usuários interajam com ele diretamente.
+- **Alerta:** O bot notifica, via chat individual ou chat em grupo, quando um conteúdo é classificado como gerado por IA.
+- **Nível de Confiança:** O bot informa ao usuário a confiança em sua resposta ao analisar algum conteúdo.
+- **Monitoramento em larga escala:** O bot pode interagir com múltiplos chats simultaneamente de forma rápida e precisa
 
 ## Requisitos de Instalação
 
-- Python 3.x
-- Docker 
-- Pacotes Python listados em `requirements.txt`
+- [Python 3.x](https://www.python.org/)
+- [Docker](https://www.docker.com/)
 
-## Configuração
+## Configuração (Linux)
 
 1. Clone o repositório:
 
@@ -24,49 +24,51 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
    cd DeepfakeDetectorBot
    ```
 
-2. Instale as dependências:
-
-   ```bash
-   cd application
-   pip install -r requirements.txt
-   cd ..
-   ```
-
-3. Iniciar o bot e o modelo de detecção de aúdios deepfake:
-
-   Primeiro é necessário editar as configurações do servidor que irá executar o bot.
-
-   ```bash
-   cd source_bot/src
-   nano server_config.json
-   ```
-
-   Edite a variável 'serverIP' com o ip público da máquina que irá rodar o bot. Salve as mudanças feitas e prossiga com os próximos comandos:
-
-   ```bash
-   cd ../..
-   sudo docker compose up
-   ```
-   Configure as credenciais do WhatsApp quando um Qrcode do bot aparecer na tela.
-
-   Uma vez que o servidor do bot e o modelo de detecção de deepfakes estiverem rodando, use o comando abaixo para iniciar a integração:
+   Após clonar o repositório acesse a pasta raiz do projeto:
 
     ```bash
-    cd application
-    python3 Main.py
+   cd DeepfakeDetectorBot
    ```
 
+3. Iniciar a aplicação:
+
+   Primeiro é necessário [instalar o Docker](https://docs.docker.com/engine/install/ubuntu/) na sua máquina.
+
+   Verifique se a instalação está correta com o comando abaixo:
+
+   ```bash
+   sudo docker run hello-world
+   ```
+   Isso irá baixar uma imagem do Docker Hub e rodar um container de teste para verificar que tudo está funcionando como devia.
+
+   Verifique a versão da sua instalação do Docker:
+
+   ```bash
+   sudo docker --version
+   ```
+   A saída que você verá será algo parecido com:
+   ```bash
+   Docker version XX.X.X, build abcd123
+   ```
+
+   Após garantir que o Docker está instalado e funcionando corretamente prossiga com os próximos comandos:
+
+   Verifique se você está na pasta raiz do repositório com o comando:
+   ```bash
+   cd ../..
+   ```
+   Na pasta raiz, execute:
+   ```bash
+   sudo docker compose up --build
+   ```
+   Aguarde a construção das imagens e início dos contâineres (isso pode demorar).
+
+   Por fim, configure as credenciais do WhatsApp quando um Qrcode do bot aparecer na tela (use uma conta secundária do Whatsapp e deixe-a exclusivamente para o bot).
+
+   Uma vez que o servidor do bot e o modelo de detecção de deepfakes estiverem rodando será possível usar a aplicação.
 
 ## Uso
 
-- O bot irá ler e responder mensagens recebidas pelo número que foi usado para a configuração das credenciais.
+- O bot irá ler e responder mensagens recebidas no número que foi usado para a configuração das credenciais.
 - Envie mensagens para esse número caso queira realizar a verificação de veracidade de algum aúdio.
-- O bot analisará automaticamente os áudios recebidos e notificará o usuário quando detectar um áudio gerado por IA.
-
-## TO DO
-
-- Configurar DockerFile e editar docker-compose.yaml para a integração automática do módulo 'application'.
-- Melhorar a lógica de processamento e resposta das mensagens do WhatsApp.
-- Implementar lógica necessária para lidar com vídeos.
-- Melhorar a robustez e generalização do modelo de detecção.
-- Implementar módulos para funcionamento do modelo em larga escala e módulo de monitoramento automático de mensagens em grupos.
+- O bot analisará automaticamente os áudios e vídeos recebidos e notificará o usuário quando detectar um áudio gerado por IA.
