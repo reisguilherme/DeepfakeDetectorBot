@@ -1,7 +1,7 @@
 # Detecção de aúdios gerados por inteligência artificial no WhatsApp. 🤖
 
 
-Este projeto implementa um bot para detecção de áudios gerados por inteligência artificial (IA) no WhatsApp. O objetivo principal é identificar e sinalizar áudios que foram gerados por modelos de síntese de fala automatizados, dificultando golpes de falsidade ideológica por meio de clonagem de voz e a propagação em massa de notícias falsas.
+Este projeto, desenvolvido para a disciplina de Processamento de Áudio e Voz do bacharelado em IA da UFG, implementa um bot para detecção de áudios gerados por inteligência artificial (IA) no WhatsApp. O objetivo principal é identificar e sinalizar áudios que foram gerados por modelos de síntese de fala automatizados, dificultando golpes de falsidade ideológica por meio de clonagem de voz e a propagação em massa de notícias falsas.
 
 ## Funcionalidades Principais
 
@@ -72,3 +72,9 @@ Este projeto implementa um bot para detecção de áudios gerados por inteligên
 - O bot irá ler e responder mensagens recebidas no número que foi usado para a configuração das credenciais.
 - Envie mensagens para esse número caso queira realizar a verificação de veracidade de algum aúdio.
 - O bot analisará automaticamente os áudios e vídeos recebidos e notificará o usuário quando detectar um áudio gerado por IA.
+
+### Autores 
+- Guilherme Henrique dos Reis
+- Gustavo dos Reis Oliveira
+- Evellyn Nicole Machado Rosa
+- Isadora Stéfanny R. R. Mesquita
