@@ -40,9 +40,9 @@ async def predict_audio_class(audio_file: UploadFile = File(...)):
         probabilities = F.softmax(logits, dim=1).squeeze()
         predicted_class_id = logits.argmax().item()
         predicted_class = id2label[predicted_class_id]
-        confidence = probabilities[predicted_class_id].item()
+        confidence = probabilities[predicted_class_id].item() * 100
     
-    return JSONResponse(content={"predicted_class": predicted_class, "confidence": confidence})
+    return JSONResponse(content={"predicted_class": predicted_class, "confidence": f"{confidence:.2f}"})
 
 if __name__ == "__main__":
     import uvicorn
